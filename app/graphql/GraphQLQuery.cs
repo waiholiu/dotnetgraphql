@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Net.Mime;
 
 using System.Linq;
 using GraphQL.Types;
@@ -19,11 +20,11 @@ namespace app
 
 
             Field<IntGraphType>(
-                "getTopics",
+                "getTopics2",
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "first" }),
                 resolve: context =>
                 {
-                    return 1;
+                    return 100000000 + DateTime.Now.Millisecond;
 
                 });
             

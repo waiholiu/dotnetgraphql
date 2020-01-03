@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using GraphQL;
 using GraphQL.Types;
 using GraphiQl;
+using GraphQL.DataLoader;
+using GraphQL.Http;
 
 namespace app
 {
@@ -34,11 +36,14 @@ namespace app
 
             services.AddControllers();
 
+            services.AddSingleton<IDocumentWriter, DocumentWriter>();
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             services.AddScoped<BaseGraphQLQuery>();
             services.AddScoped<GraphQLQuery>();
             services.AddScoped<ISchema, GraphQLSchema>();
-            
+            services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
+            services.AddSingleton<DataLoaderDocumentListener>();
+
 
             // var sp = services.BuildServiceProvider();
             // services.AddSingleton<ISchema>(new GraphQLSchema(new FuncDependencyResolver(type => sp.GetService(type))));
@@ -52,8 +57,8 @@ namespace app
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseGraphiQl();   
-            
+            app.UseGraphiQl("/graphql", "/graphql");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -70,10 +75,10 @@ namespace app
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });                
+            });
 
-            
-        
+
+
 
         }
     }
