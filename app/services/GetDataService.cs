@@ -11,6 +11,8 @@ namespace app
 
         // Task<IDictionary<int, Book>> GetBooksAsync(IEnumerable<int> authorIds, CancellationToken cancellationToken);
         Task<ILookup<int, Book>> GetBooksAsync(IEnumerable<int> authorIds);
+
+        Task<ILookup<int, SalesInvoice>> GetSalesInvoicesAsync(IEnumerable<int> bookIds);
     }
 
     public class GetDataService : IGetDataService
@@ -28,6 +30,12 @@ namespace app
         {
             var books = await db.Books.Where(b => authorIds.Contains(b.AuthorId)).ToListAsync();
             return books.ToLookup(b => b.AuthorId);
+        }
+
+         public async Task<ILookup<int, SalesInvoice>> GetSalesInvoicesAsync(IEnumerable<int> bookIds)
+        {
+            var salesInvoices = await db.SalesInvoices.Where(b => bookIds.Contains(b.BookId)).ToListAsync();
+            return salesInvoices.ToLookup(b => b.BookId);
         }
 
 

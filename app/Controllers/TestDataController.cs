@@ -24,6 +24,7 @@ namespace app.Controllers
         public String Get()
         {
 
+            db.SalesInvoices.RemoveRange(db.SalesInvoices);
             db.Books.RemoveRange(db.Books);
             db.Authors.RemoveRange(db.Authors);
             db.SaveChanges();
@@ -47,8 +48,19 @@ namespace app.Controllers
                     {
                         DateOfPublication = DateTime.Now.AddMonths(-1),
                         Title = "The bibliography of " + personGenerator.GenerateRandomFirstAndLastName(),
+                        SalesInvoices = new List<SalesInvoice>()
+
 
                     };
+
+                    for (var k = 0; k < 3; k++)
+                    {
+                        SalesInvoice newSale = new SalesInvoice();
+                        newSale.CustomerName = personGenerator.GenerateRandomFirstAndLastName();
+                        newSale.DateOfSale = DateTime.Now;
+                        newSale.Price = 100;
+                        newBook.SalesInvoices.Add(newSale);
+                    }
 
                     newAuthor.Books.Add(newBook);
 
@@ -58,6 +70,7 @@ namespace app.Controllers
 
 
             }
+
             db.SaveChanges();
 
             return "all worked";

@@ -16,6 +16,8 @@ namespace app
 
         public DbSet<Book> Books { set; get; }
 
+        public DbSet<SalesInvoice> SalesInvoices { set; get; }
+
         
     }
 }
