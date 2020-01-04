@@ -1,11 +1,25 @@
+**What is this?**
+
+This is a sample project to determine how to implement a GraphQL server in .NET core 3.1. In particular, I really wanted to demonstrate how to use the DataLoader pattern along with Entity Framework to access the databases efficiently (using EF as your data provider and not using DataLoader pattern results in a n+1 problem)
+
+I'm using
+- GraphQL.NET library
+- ASP.NET Web API
+- .NET Core 3.1
+- Linux for SQL Server docker image (although you can just use any SQL instance)
+- Entity Framework Core
+
+The database structure is very simple. It has 3 tables - Authors, Books and SalesInvoices.
+An Author has many books and books have many salesinvoices.
+
+The point of this project is for you to quickly create a GraphQL server and then quickly fire off queries on it. One nice thing to do is to also profile the queries in SQL Server to see what they are doing.
+
 **Prereq**
 
 - make sure you have a sql database set up
 - If you have docker, just run this to set up SQL Server in docker. Otherwise just run it in whatever sql instance you have and change the connection string
 
 docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=Password1' -p 1433:1433 -v sqlvolume:/var/opt/mssql -d mcr.microsoft.com/mssql/server:2017-latest
-
-
 
 
 **Installation**
