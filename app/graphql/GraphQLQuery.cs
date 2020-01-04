@@ -38,10 +38,10 @@ namespace app
                 });
 
             Field<ListGraphType<AuthorType>>().Name("GetAuthors").Description("Get all Authors")
-                        .ResolveAsync(
-                            async context =>
+                        .Resolve(
+                            context =>
                             {
-                                return await db.Authors.ToListAsync();
+                                return db.Authors; //.ToListAsync();
                                 // Get or add a batch loader with the key "GetUsersById"
                                 // The loader will call GetUsersByIdAsync for each batch of keys
                                 // var loader = accessor.Context.GetOrAddBatchLoader<int, Author>("GetAuthors", dataService.GetAuthors);
@@ -49,6 +49,25 @@ namespace app
                                 // // Add this UserId to the pending keys to fetch
                                 // // The task will complete once the GetUsersByIdAsync() returns with the batched results
                                 // return loader.LoadAsync(context..);
+
+                            });
+
+             Field<ListGraphType<BookType>>().Name("GetBooks").Description("Get list of books")
+                        .Argument<IntGraphType>("first", "limit")
+                        .Resolve(
+                            context =>
+                            {
+
+                                int i = context.GetArgument<int>("first");
+
+                                return db.Books.Take(i);
+                                // Get or add a batch loader with the key "GetUsersById"
+                                // The loader will call GetUsersByIdAsync for each batch of keys
+                                // var loader = accessor.Context.GetOrAddBatchLoader<int, Author>("GetBooks", dataService.GetBooksAsync);
+
+                                // // Add this UserId to the pending keys to fetch
+                                // // The task will complete once the GetUsersByIdAsync() returns with the batched results
+                                // return loader.LoadAsync(context.Source.);
 
                             });
 

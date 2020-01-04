@@ -33,7 +33,7 @@ namespace app
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = @"Server=localhost,1433;Database=dotnetgraphql;User=sa; Password=Password1";
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection), ServiceLifetime.Transient);
 
             services.AddControllers();
 
@@ -41,7 +41,7 @@ namespace app
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             services.AddScoped<BaseGraphQLQuery>();
             services.AddScoped<GraphQLQuery>();
-            
+
             services.AddScoped<ISchema, GraphQLSchema>();
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
             services.AddSingleton<DataLoaderDocumentListener>();

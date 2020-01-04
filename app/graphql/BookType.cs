@@ -28,7 +28,17 @@ namespace app
                         dataService.GetSalesInvoicesAsync);
 
                     return loader.LoadAsync(ctx.Source.Id);
-                });            
+                });
+
+            Field<AuthorType, Author>()
+                .Name("Author")
+                .ResolveAsync(ctx =>
+                {
+                    var loader = accessor.Context.GetOrAddBatchLoader<int, Author>("GetAuthorsById",
+                    dataService.GetAuthorsByIdAsync);
+
+                    return loader.LoadAsync(ctx.Source.AuthorId);
+                });
         }
     }
 }
