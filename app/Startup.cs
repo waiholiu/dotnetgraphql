@@ -16,6 +16,7 @@ using GraphQL.Types;
 using GraphiQl;
 using GraphQL.DataLoader;
 using GraphQL.Http;
+using Newtonsoft.Json;
 
 namespace app
 {
@@ -43,12 +44,19 @@ namespace app
             services.AddScoped<ISchema, GraphQLSchema>();
             services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
             services.AddSingleton<DataLoaderDocumentListener>();
+            services.AddScoped<IGetDataService, GetDataService>();
+            services.AddScoped<AuthorType>();
+            services.AddScoped<BookType>();
 
 
             // var sp = services.BuildServiceProvider();
             // services.AddSingleton<ISchema>(new GraphQLSchema(new FuncDependencyResolver(type => sp.GetService(type))));
 
-            services.AddMvc();
+            // fix - https://stackoverflow.com/a/58084628
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+                
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
                                                .AllowAnyMethod()
                                                 .AllowAnyHeader()));
