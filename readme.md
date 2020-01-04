@@ -27,53 +27,53 @@ You can just go there and use the graphiql IDE but it's pretty crap, I would say
 
 simple - just grab the authors
 
-query{
-  getAuthors{
-    dateOfBirth
-    id
-    name
-  }
-}
+    query{
+    getAuthors{
+        dateOfBirth
+        id
+        name
+    }
+    }
 
 a few tables - this will grab all the authors, show some info about their books and then information about the sales of each book
 
-query{
-  getAuthors{
-    dateOfBirth
-    id
-    name
-    books{
-      dateOfPublication
-      id
-      salesInvoices{
-        customerName
-      }
+    query{
+    getAuthors{
+        dateOfBirth
+        id
+        name
+        books{
+        dateOfPublication
+        id
+        salesInvoices{
+            customerName
+        }
+        }
     }
-  }
-}
+    }
 
 some cooler things you can do - grab 5 books, show the author of each book, show all the other books each author has written. 
 Also, for the original 5 books, show all the sales for them
 
-query{
-  getBooks(first: 5){
-    author
-    {
-      name
-      books
-      {
-        title
+    query{
+    getBooks(first: 5){
+        author
+        {
+        name
+        books
+        {
+            title
+            id
+        }
+        }
+        dateOfPublication
         id
-      }
+            salesInvoices{
+        customerName
+        }
+        title
     }
-    dateOfPublication
-    id
-		salesInvoices{
-      customerName
     }
-    title
-  }
-}
 
 
 
