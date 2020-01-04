@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -15,6 +16,8 @@ namespace app
         Task<ILookup<int, SalesInvoice>> GetSalesInvoicesAsync(IEnumerable<int> bookIds);
 
         Task<IDictionary<int, Author>> GetAuthorsByIdAsync(IEnumerable<int> authorIds, CancellationToken cancellationToken);
+
+        Task<IDictionary<int, String>> GetAuthorsNameAsync(IEnumerable<int> authorIds, CancellationToken cancellationToken);
     }
 
     public class GetDataService : IGetDataService
@@ -42,6 +45,10 @@ namespace app
 
         public async Task<IDictionary<int, Author>> GetAuthorsByIdAsync(IEnumerable<int> authorIds, CancellationToken cancellationToken){
             return await db.Authors.Where(a => authorIds.Contains(a.Id)).ToDictionaryAsync(a => a.Id, a => a);
+        }
+
+        public async Task<IDictionary<int, String>> GetAuthorsNameAsync(IEnumerable<int> authorIds, CancellationToken cancellationToken){
+            return await db.Authors.Where(a => authorIds.Contains(a.Id)).ToDictionaryAsync(a => a.Id, a => a.Name);
         }
 
 

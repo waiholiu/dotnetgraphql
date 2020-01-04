@@ -39,6 +39,16 @@ namespace app
 
                     return loader.LoadAsync(ctx.Source.AuthorId);
                 });
+            
+             Field<StringGraphType, String>()
+                .Name("AuthorsName")
+                .ResolveAsync(ctx =>
+                {
+                    var loader = accessor.Context.GetOrAddBatchLoader<int, String>("GetAuthorsName",
+                    dataService.GetAuthorsNameAsync);
+
+                    return loader.LoadAsync(ctx.Source.AuthorId);
+                });
         }
     }
 }

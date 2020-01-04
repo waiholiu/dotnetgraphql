@@ -37,14 +37,14 @@ namespace app
 
             services.AddControllers();
 
-            services.AddSingleton<IDocumentWriter, DocumentWriter>();
+            services.AddScoped<IDocumentWriter, DocumentWriter>();
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             services.AddScoped<BaseGraphQLQuery>();
             services.AddScoped<GraphQLQuery>();
 
             services.AddScoped<ISchema, GraphQLSchema>();
-            services.AddSingleton<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
-            services.AddSingleton<DataLoaderDocumentListener>();
+            services.AddScoped<IDataLoaderContextAccessor, DataLoaderContextAccessor>();
+            services.AddScoped<DataLoaderDocumentListener>();
             services.AddScoped<IGetDataService, GetDataService>();
             services.AddScoped<AuthorType>();
             services.AddScoped<BookType>();
