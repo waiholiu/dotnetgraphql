@@ -16,6 +16,7 @@ The point of this project is for you to quickly create a GraphQL server and then
 
 **Prereq**
 
+- .NET Core 3.1 SDK installed
 - make sure you have a sql database set up
 - If you have docker, just run this to set up SQL Server in docker. Otherwise just run it in whatever sql instance you have and change the connection string
 
